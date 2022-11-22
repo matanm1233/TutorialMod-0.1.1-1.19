@@ -1,13 +1,14 @@
 package net.matan.tutorialmod.block;
 
 import net.matan.tutorialmod.TutorialMod;
+import net.matan.tutorialmod.block.custom.JumpyBlock;
+import net.matan.tutorialmod.block.custom.ZirconLampBlock;
 import net.matan.tutorialmod.item.ModCreativeModeTab;
 import net.matan.tutorialmod.item.ModItems;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -27,6 +28,10 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE)
                     .destroyTime(2f).requiresCorrectToolForDrops().strength(2f)), ModCreativeModeTab.TUTORIAL_TAB);
 
+    public static final RegistryObject<Block> JUMPY_BLOCK = registerBlock("jumpy_block",
+            () -> new JumpyBlock(BlockBehaviour.Properties.of(Material.STONE)
+                    .destroyTime(2f).requiresCorrectToolForDrops().strength(2f)), ModCreativeModeTab.TUTORIAL_TAB);
+
     public static final RegistryObject<Block> ZIRCON_ORE = registerBlock("zircon_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
                     .requiresCorrectToolForDrops().destroyTime(2f),
@@ -36,6 +41,12 @@ public class ModBlocks {
             () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
                     .destroyTime(2f).requiresCorrectToolForDrops(),
                     UniformInt.of(3,7)), ModCreativeModeTab.TUTORIAL_TAB);
+
+    public static final RegistryObject<Block> ZIRCON_LAMP = registerBlock("zircon_lamp",
+            () -> new ZirconLampBlock(BlockBehaviour.Properties.of(Material.STONE)
+                    .destroyTime(2f).requiresCorrectToolForDrops().strength(2f).lightLevel
+                            (state -> state.getValue(ZirconLampBlock.LIT) ? 15 : 0)), ModCreativeModeTab.TUTORIAL_TAB);
+
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn, tab);
